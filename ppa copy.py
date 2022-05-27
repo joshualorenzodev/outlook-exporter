@@ -4,7 +4,7 @@ import csv
 from datetime import date, datetime, timedelta
 
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
-inbox = outlook.GetDefaultFolder(6).Folders["NAMEOFSUBFOLDER"]
+inbox = outlook.GetDefaultFolder(6).Folders["PPA"]
 messages = inbox.Items
 
 # Modify code below to filter by time
@@ -15,7 +15,7 @@ messages = inbox.Items
 # messages = messages.Restrict("[ReceivedTime] >= '" + received_dt + "'")
 
 # Filter by specifying a date explicitly
-messages = messages.Restrict("[ReceivedTime] >= 'DATETIME type MMM DD, YYYYY HH:mm P'")
+messages = messages.Restrict("[ReceivedTime] >= 'May 01, 2022 12:00 AM'")
 
 # Modify code below to filter by sender
 # messages = messages.Restrict("[SenderEmailAddress] = 'postmaster@gov.mb.ca'")
@@ -32,8 +32,8 @@ messages = messages.Restrict("[ReceivedTime] >= 'DATETIME type MMM DD, YYYYY HH:
 # Sorts the emails by the time it was received
 messages.Sort("[ReceivedTime]", Descending=False)
 
-# Uncomment this to get how many emails in total
-# print(len(messages))
+# Run this to get how many messages
+print(len(messages))
 
 # Uncomment code block to print test output on the command line
 # for message in messages:
@@ -59,8 +59,8 @@ messages.Sort("[ReceivedTime]", Descending=False)
 
 # Exports a .csv file in the specified path using the csv python module
 # Learn more about csv module here: https://docs.python.org/3/library/csv.html
-with open('C:/PATH/TO/CSV_FILE.CSV', 'w') as CSV_FILE:
-    writer = csv.writer(CSV_FILE)
+with open('C:/Python/PPA/ppa_file.csv', 'w') as ppa_file:
+    ppa_writer = csv.writer(ppa_file)
 
     for message in messages:
         index = message.Body.index(">") + 1
@@ -74,4 +74,4 @@ with open('C:/PATH/TO/CSV_FILE.CSV', 'w') as CSV_FILE:
             recipient = body.split("\r\n")[2]
             subject = body.split("\r\n")[3]
 
-        writer.writerow([sender, recipient, subject])
+        ppa_writer.writerow([sender, recipient, subject])
