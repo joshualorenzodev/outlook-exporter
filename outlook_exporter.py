@@ -4,7 +4,7 @@ import csv
 from datetime import date, datetime, timedelta
 
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
-inbox = outlook.GetDefaultFolder(6).Folders["NAMEOFSUBFOLDER"]
+inbox = outlook.GetDefaultFolder(6).Folders["SUBFOLDER"]
 messages = inbox.Items
 
 # Modify code below to filter by time
@@ -15,7 +15,7 @@ messages = inbox.Items
 # messages = messages.Restrict("[ReceivedTime] >= '" + received_dt + "'")
 
 # Filter by specifying a date explicitly
-messages = messages.Restrict("[ReceivedTime] >= 'DATETIME type MMM DD, YYYYY HH:mm P'")
+messages = messages.Restrict("[ReceivedTime] >= 'April 01,'")
 
 # Modify code below to filter by sender
 # messages = messages.Restrict("[SenderEmailAddress] = 'postmaster@gov.mb.ca'")
@@ -75,3 +75,6 @@ with open('C:/PATH/TO/CSV_FILE.CSV', 'w') as CSV_FILE:
             subject = body.split("\r\n")[3]
 
         writer.writerow([sender, recipient, subject])
+
+# Prints how many emails were exported
+print(len(messages))
